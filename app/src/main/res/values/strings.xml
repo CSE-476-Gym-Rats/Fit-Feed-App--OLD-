@@ -24,5 +24,13 @@
     <string name="save_home_gym_button">Save</string>
     <string name="home_gym">Home Gym</string>
     <string name="error_getting_location">\"Error getting location: \"</string>
+    <string name="add_friend">+ Add Friend</string>
+    <string name="workouts">Workouts</string>
+    <string name="_0_placeholder">0</string>
+    <string name="followers">Followers</string>
+    <string name="following">Following</string>
+    <string name="home_gym_label">Home Gym:</string>
+    <string name="logo">logo</string>
+    <string name="profile_icon">profile_icon</string>
 
 </resources>

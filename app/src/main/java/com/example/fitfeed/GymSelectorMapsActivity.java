@@ -52,7 +52,7 @@ public class GymSelectorMapsActivity extends FragmentActivity implements
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private LatLng currentLocation;
     private FusedLocationProviderClient fusedLocationClient;
-    private final float ZOOM_LEVEL_INIT = 16.0f;
+    private final float ZOOM_LEVEL_INIT = 15.0f;
     private PlacesClient placesClient;
 
     private FloatingActionButton saveButton;
@@ -185,10 +185,11 @@ public class GymSelectorMapsActivity extends FragmentActivity implements
      */
     @SuppressLint("MissingPermission")
     private void requestNewLocationData() {
+        // TODO: Use newer Location builder instead of LocationRequest
         LocationRequest locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationRequest.setInterval(10000);
-        locationRequest.setFastestInterval(5000);
+        locationRequest.setInterval(5000);
+        locationRequest.setFastestInterval(4999);
         locationRequest.setNumUpdates(1);
 
         fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
@@ -222,14 +223,12 @@ public class GymSelectorMapsActivity extends FragmentActivity implements
     /**
      * Callback for async places search
      */
-    public interface PlacesCallback {
+    private interface PlacesCallback {
         void onPlacesFound(List<Place> places);
     }
 
     /**
      * Use places (new) api to find a list of 20 nearby gyms in a 10km radius
-     * @param currentLocation
-     * @param callback
      */
     @SuppressLint("MissingPermission")
     private void findNearbyGyms(LatLng currentLocation, PlacesCallback callback) {
