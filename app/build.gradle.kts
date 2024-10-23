@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.google.android.libraries.mapsplatform.secrets.gradle.plugin)
 }
 
 android {
@@ -30,6 +31,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -43,6 +47,9 @@ dependencies {
 
     // Feature module support for Fragments
     implementation(libs.navigation.dynamic.features.fragment)
+    implementation(libs.play.services.maps)
+    implementation(libs.play.services.location)
+    implementation(libs.places)
 
     // Testing Navigation
     androidTestImplementation(libs.navigation.testing)
