@@ -23,5 +23,6 @@
     <string name="cancel_home_gym_button">Cancel</string>
     <string name="save_home_gym_button">Save</string>
     <string name="home_gym">Home Gym</string>
+    <string name="error_getting_location">\"Error getting location: \"</string>
 
 </resources>

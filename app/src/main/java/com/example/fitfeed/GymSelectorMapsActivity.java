@@ -7,14 +7,18 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -107,15 +111,14 @@ public class GymSelectorMapsActivity extends FragmentActivity implements
 
         // Listener for cancel
         cancelButton = this.findViewById(R.id.cancelHomeGym);
-        cancelButton.setOnClickListener(v -> {
-            finish();
-        });
+        cancelButton.setOnClickListener(v -> finish());
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        // Get the SupportMapFragment
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
+
         // Initialize the FusedLocationProviderClient
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -135,7 +138,6 @@ public class GymSelectorMapsActivity extends FragmentActivity implements
         // Check location permission again before enabling user location
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            mMap.setMyLocationEnabled(true);
             getDeviceLocation(); // Get the device location
         } else {
             checkLocationPermission();
@@ -148,6 +150,7 @@ public class GymSelectorMapsActivity extends FragmentActivity implements
      */
     @SuppressLint("MissingPermission")
     private void getDeviceLocation() {
+        mMap.setMyLocationEnabled(true);
         fusedLocationClient.getLastLocation()
                 .addOnSuccessListener(this, location -> {
                     if (location != null) {
@@ -155,7 +158,7 @@ public class GymSelectorMapsActivity extends FragmentActivity implements
                         currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, ZOOM_LEVEL_INIT));
 
-                        // Now that we have a valid location, mark nearby gyms
+                        // Mark nearby gyms
                         findNearbyGyms(currentLocation, places -> {
                             for (Place place : places) {
                                 if (place.getLocation() != null) { // Ensure Location is not null
@@ -163,15 +166,58 @@ public class GymSelectorMapsActivity extends FragmentActivity implements
                                             .position(place.getLocation())
                                             .title(place.getDisplayName()));
                                 } else {
-                                    Log.e("TAG", "Place " + place.getName() + " has null location");
+                                    Log.e("TAG", "Place " + place.getDisplayName() + " has null location");
                                 }
                             }
                         });
-                    } else {
-                        Log.e("TAG", "Device location is null");
+                    } else { // No previous location
+                        requestNewLocationData();
                     }
+                })
+                .addOnFailureListener(e -> {
+                    // Failure to get location (no gps, maybe indoors, etc.)
+                    Toast.makeText(this, R.string.error_getting_location + e.getMessage(), Toast.LENGTH_LONG).show();
                 });
     }
+
+    /**
+     * Request location data if no previous location can be found
+     */
+    @SuppressLint("MissingPermission")
+    private void requestNewLocationData() {
+        LocationRequest locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(10000);
+        locationRequest.setFastestInterval(5000);
+        locationRequest.setNumUpdates(1);
+
+        fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
+    }
+
+    /**
+     * Callback for async location
+     */
+    private LocationCallback locationCallback = new LocationCallback() {
+        @Override
+        public void onLocationResult(LocationResult locationResult) {
+            Location location = locationResult.getLastLocation();
+            if (location != null) {
+                currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, ZOOM_LEVEL_INIT));
+
+                // Find nearby gyms based on the new location
+                findNearbyGyms(currentLocation, places -> {
+                    for (Place place : places) {
+                        if (place.getLocation() != null) {
+                            mMap.addMarker(new MarkerOptions()
+                                    .position(place.getLocation())
+                                    .title(place.getDisplayName()));
+                        }
+                    }
+                });
+            }
+        }
+    };
 
     /**
      * Callback for async places search
@@ -211,8 +257,6 @@ public class GymSelectorMapsActivity extends FragmentActivity implements
 
     /**
      * Select a marked gym
-     * @param marker
-     * @return
      */
     @Override
     public boolean onMarkerClick(@NonNull Marker marker) {
