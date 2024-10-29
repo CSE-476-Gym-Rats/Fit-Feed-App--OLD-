@@ -1,12 +1,17 @@
 package com.example.fitfeed;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +28,8 @@ public class WorkoutsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private FloatingActionButton newWorkoutButton;
 
     public WorkoutsFragment() {
         // Required empty public constructor
@@ -49,6 +56,7 @@ public class WorkoutsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -61,4 +69,22 @@ public class WorkoutsFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_workouts, container, false);
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Listener for newWorkoutButton
+        newWorkoutButton = getView().findViewById(R.id.newWorkoutButton);
+        newWorkoutButton.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), NewWorkoutActivity.class);
+            startActivity(intent);
+        });
+    }
+    /*
+    private void newWorkout(View view) {
+        Intent intent = new Intent(this, AddWorkoutActivity.class);
+        startActivity(intent);
+    }
+     */
 }
