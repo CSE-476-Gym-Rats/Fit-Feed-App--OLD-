@@ -20,8 +20,8 @@
     <string name="title_activity_gym_selector_maps">GymSelectorMapsActivity</string>
     <string name="location_permission_denied">FitFeed requires location access to find gyms near you.</string>
     <string name="maps_api_key">AIzaSyCNqSQ3MQT7M9WrEu9rWCW-1XPEJfsDTQ8</string>
-    <string name="cancel_home_gym_button">Cancel</string>
-    <string name="save_home_gym_button">Save</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="save_button">Save</string>
     <string name="home_gym">Home Gym</string>
     <string name="error_getting_location">\"Error getting location: \"</string>
     <string name="add_friend">+ Add Friend</string>
@@ -32,5 +32,12 @@
     <string name="home_gym_label">Home Gym:</string>
     <string name="logo">logo</string>
     <string name="profile_icon">profile_icon</string>
+    <string name="add_workout">Add Workout</string>
+    <string name="workout_name_placeholder">Workout Name</string>
+    <string name="sets_placeholder">Sets</string>
+    <string name="reps_placeholder">Reps</string>
+    <string name="exercise_placeholder">Exercise</string>
+    <string name="weight_placeholder">Weight</string>
+    <string name="add_exercise_button">Add Exercise</string>
 
 </resources>
