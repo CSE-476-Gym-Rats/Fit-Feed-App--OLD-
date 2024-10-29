@@ -1,4 +1,4 @@
-package com.example.fitfeed;
+package com.example.fitfeed.fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,8 +14,10 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.fitfeed.R;
+import com.example.fitfeed.activities.FriendsActivity;
+import com.example.fitfeed.activities.GymSelectorMapsActivity;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
  * Fragment for displaying the profile view

@@ -1,4 +1,4 @@
-package com.example.fitfeed;
+package com.example.fitfeed.activities;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -11,6 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.example.fitfeed.fragments.FeedFragment;
+import com.example.fitfeed.fragments.ProfileFragment;
+import com.example.fitfeed.R;
+import com.example.fitfeed.fragments.WorkoutsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
