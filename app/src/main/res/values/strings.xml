@@ -39,5 +39,6 @@
     <string name="exercise_placeholder">Exercise</string>
     <string name="weight_placeholder">Weight</string>
     <string name="add_exercise_button">Add Exercise</string>
+    <string name="empty_exercise_message">cannot be empty</string>
 
 </resources>
