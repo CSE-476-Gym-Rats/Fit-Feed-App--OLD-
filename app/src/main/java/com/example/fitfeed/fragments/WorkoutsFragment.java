@@ -1,4 +1,4 @@
-package com.example.fitfeed;
+package com.example.fitfeed.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.fitfeed.R;
+import com.example.fitfeed.activities.NewWorkoutActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**

@@ -1,6 +1,5 @@
-package com.example.fitfeed;
+package com.example.fitfeed.fragments;
 
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -15,7 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.fitfeed.viewAdapters.PostsRecyclerViewAdapter;
+import com.example.fitfeed.R;
 
 import java.util.ArrayList;
 

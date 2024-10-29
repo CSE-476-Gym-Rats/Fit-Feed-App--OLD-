@@ -1,4 +1,4 @@
-package com.example.fitfeed;
+package com.example.fitfeed.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.example.fitfeed.R;
 
 public class LoginActivity extends AppCompatActivity {
 
