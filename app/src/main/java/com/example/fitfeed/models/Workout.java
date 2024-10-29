@@ -2,8 +2,6 @@ package com.example.fitfeed.models;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,13 +10,17 @@ import java.util.List;
  */
 public class Workout {
     private List<Exercise> exercises = new ArrayList<>();
-    private ZonedDateTime timestamp;
+    private long timestamp;
     private String workoutName;
 
     public Workout() {}
 
-    public void setTimestamp(ZonedDateTime timestamp) {
+    public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public void setWorkoutName(String name) {
+        this.workoutName = name;
     }
 
     public void addExercise(String name, int sets, int reps, float weight) {
@@ -29,7 +31,7 @@ public class Workout {
         return exercises;
     }
 
-    public ZonedDateTime getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 
