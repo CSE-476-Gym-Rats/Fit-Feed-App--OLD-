@@ -17,13 +17,6 @@ import com.example.fitfeed.R.string;
 import com.example.fitfeed.models.Workout;
 import com.example.fitfeed.utils.FileManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 
 public class NewWorkoutActivity extends AppCompatActivity {
 
