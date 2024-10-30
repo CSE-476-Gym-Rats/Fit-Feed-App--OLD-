@@ -1,4 +1,4 @@
-package com.example.fitfeed;
+package com.example.fitfeed.activities;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -11,6 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.example.fitfeed.fragments.FeedFragment;
+import com.example.fitfeed.fragments.ProfileFragment;
+import com.example.fitfeed.R;
+import com.example.fitfeed.fragments.WorkoutsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,9 +34,9 @@ public class MainActivity extends AppCompatActivity {
         setTitleBarText(bottomNavigationView.getSelectedItemId());
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentContainer, new HomeFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentContainer, new FeedFragment()).commit();
         }
-        bottomNavigationView.setSelectedItemId(R.id.nav_bar_home);
+        bottomNavigationView.setSelectedItemId(R.id.nav_bar_feed);
         bottomNavigationView.setOnItemSelectedListener(this::onNavigationItemSelected);
 
         Log.d("MainActivity.onCreate", String.format("Fragments: %d", getSupportFragmentManager().getFragments().size()));
@@ -74,12 +78,12 @@ public class MainActivity extends AppCompatActivity {
         Log.d("MainActivity.onNavigationItemSelected", String.format("Fragments: %d", getSupportFragmentManager().getFragments().size()));
 
         if (fragment == null) {
-            if (itemId == R.id.nav_bar_home) {
-                fragment = new HomeFragment();
+            if (itemId == R.id.nav_bar_feed) {
+                fragment = new FeedFragment();
             } else if (itemId == R.id.nav_bar_workouts) {
                 fragment = new WorkoutsFragment();
-            } else if (itemId == R.id.nav_bar_social) {
-                fragment = new SocialFragment();
+            } else if (itemId == R.id.nav_bar_profile) {
+                fragment = new ProfileFragment();
             }
         }
 
@@ -96,12 +100,12 @@ public class MainActivity extends AppCompatActivity {
     private void setTitleBarText(int itemId) {
         int titleId = 0;
 
-        if (itemId == R.id.nav_bar_home) {
-            titleId = R.string.home_nav_bar_title;
+        if (itemId == R.id.nav_bar_feed) {
+            titleId = R.string.feed_nav_bar_title;
         } else if (itemId == R.id.nav_bar_workouts) {
             titleId = R.string.workouts_nav_bar_title;
-        } else if (itemId == R.id.nav_bar_social) {
-            titleId = R.string.social_nav_bar_title;
+        } else if (itemId == R.id.nav_bar_profile) {
+            titleId = R.string.profile_nav_bar_title;
         }
 
         titleBarTextView.setText(titleId);

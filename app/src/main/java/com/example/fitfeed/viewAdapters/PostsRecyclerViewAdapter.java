@@ -1,4 +1,4 @@
-package com.example.fitfeed;
+package com.example.fitfeed.viewAdapters;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.fitfeed.R;
+import com.example.fitfeed.models.Workout;
+
 import java.util.List;
 
 /**
@@ -17,14 +20,12 @@ import java.util.List;
  */
 public class PostsRecyclerViewAdapter extends RecyclerView.Adapter<PostsRecyclerViewAdapter.ViewHolder> {
 
-    private List<String> data;
-    private List<Drawable> drawables;
+    private List<Workout> workouts;
     private LayoutInflater inflater;
 
-    PostsRecyclerViewAdapter(Context context, List<String> data, List<Drawable> drawables) {
+    public PostsRecyclerViewAdapter(Context context, List<Workout> workouts) {
         this.inflater = LayoutInflater.from(context);
-        this.data = data;
-        this.drawables = drawables;
+        this.workouts = workouts;
     }
 
     @Override
@@ -35,14 +36,15 @@ public class PostsRecyclerViewAdapter extends RecyclerView.Adapter<PostsRecycler
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        // set text and drawable for each post
-        holder.textView.setText(data.get(position));
-        holder.imageView.setImageDrawable(drawables.get(position));
+        // Use the workout name as the caption
+        Workout workout = workouts.get(position);
+        holder.textView.setText(workout.getWorkoutName());
+        holder.imageView.setImageResource(R.drawable.placeholder1);
     }
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return workouts.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
