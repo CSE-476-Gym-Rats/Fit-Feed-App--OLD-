@@ -40,5 +40,7 @@
     <string name="weight_placeholder">Weight</string>
     <string name="add_exercise_button">Add Exercise</string>
     <string name="empty_exercise_message">cannot be empty</string>
+    <string name="workout_saved_successfully">Workout saved successfully!</string>
+    <string name="error_saving_workout">"Error saving workout: "</string>
 
 </resources>

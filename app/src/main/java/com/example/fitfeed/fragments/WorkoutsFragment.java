@@ -6,14 +6,22 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.fitfeed.R;
 import com.example.fitfeed.activities.NewWorkoutActivity;
+import com.example.fitfeed.models.Workout;
+import com.example.fitfeed.utils.FileManager;
+import com.example.fitfeed.viewAdapters.PostsRecyclerViewAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,10 +40,9 @@ public class WorkoutsFragment extends Fragment {
     private String mParam2;
 
     private FloatingActionButton newWorkoutButton;
+    private RecyclerView workoutRecyclerView;
 
-    public WorkoutsFragment() {
-        // Required empty public constructor
-    }
+    public WorkoutsFragment() {}
 
     /**
      * Use this factory method to create a new instance of
@@ -76,6 +83,13 @@ public class WorkoutsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Setup RecyclerView
+        workoutRecyclerView = view.findViewById(R.id.recyclerViewPosts);
+        workoutRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        // Load workouts and set adapter
+        loadWorkouts();
+
         // Listener for newWorkoutButton
         newWorkoutButton = getView().findViewById(R.id.newWorkoutButton);
         newWorkoutButton.setOnClickListener(v -> {
@@ -83,10 +97,20 @@ public class WorkoutsFragment extends Fragment {
             startActivity(intent);
         });
     }
-    /*
-    private void newWorkout(View view) {
-        Intent intent = new Intent(this, AddWorkoutActivity.class);
-        startActivity(intent);
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadWorkouts();
     }
-     */
+
+    private void loadWorkouts() {
+        try {
+            List<Workout> workouts = FileManager.loadWorkouts(getContext());
+            PostsRecyclerViewAdapter adapter = new PostsRecyclerViewAdapter(getContext(), workouts);
+            workoutRecyclerView.setAdapter(adapter);
+        } catch (Exception e) {
+            Toast.makeText(getContext(), "Error loading workouts.", Toast.LENGTH_SHORT).show();
+        }
+    }
 }

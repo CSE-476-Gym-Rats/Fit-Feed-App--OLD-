@@ -1,7 +1,5 @@
 package com.example.fitfeed.models;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +31,10 @@ public class Workout {
 
     public long getTimestamp() {
         return timestamp;
+    }
+
+    public String getWorkoutName() {
+        return workoutName;
     }
 
     /**
