@@ -13,11 +13,15 @@ import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.fitfeed.models.Workout;
+import com.example.fitfeed.utils.FileManager;
 import com.example.fitfeed.viewAdapters.PostsRecyclerViewAdapter;
 import com.example.fitfeed.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,6 +39,7 @@ public class FeedFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private PostsRecyclerViewAdapter postsRecyclerViewAdapter;
+    private RecyclerView postRecyclerView;
     private Parcelable stateList;
 
     public FeedFragment() {
@@ -79,71 +84,25 @@ public class FeedFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // TODO implement actual posts instead of placeholder values
-        ArrayList<String> postText = new ArrayList<>();
-        postText.add("Your friend just hit a PB in a set!");
-        postText.add("You became friends with Josh!");
-        postText.add("Josh shared his new workout plan with you");
-
-        ArrayList<Drawable> postDrawable = new ArrayList<>();
-        postDrawable.add(ResourcesCompat.getDrawable(getResources(), R.drawable.placeholder1, null));
-        postDrawable.add(ResourcesCompat.getDrawable(getResources(), R.drawable.placeholder2, null));
-        postDrawable.add(ResourcesCompat.getDrawable(getResources(), R.drawable.placeholder3, null));
-
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerViewPosts);
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        postsRecyclerViewAdapter = new PostsRecyclerViewAdapter(view.getContext(), postText, postDrawable);
-        recyclerView.setAdapter(postsRecyclerViewAdapter);
-        recyclerView.setSaveEnabled(true);
-
-        // set up the RecyclerView
-//        if (savedInstanceState == null) {
-//            recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-//            postsRecyclerViewAdapter = new PostsRecyclerViewAdapter(view.getContext(), postText);
-//            recyclerView.setAdapter(postsRecyclerViewAdapter);
-//            recyclerView.setSaveEnabled(true);
-////        } else {
-////            stateList = savedInstanceState.getParcelable("socialPostsList");
-////            if (stateList != null) {
-////                recyclerView.getLayoutManager().onRestoreInstanceState(stateList);
-////                stateList = null;
-////            }
-//        }
+        // Setup RecyclerView
+        postRecyclerView = view.findViewById(R.id.recyclerViewPosts);
+        postRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        loadPosts();
     }
 
-//    @Override
-//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-//        super.onActivityCreated(savedInstanceState);
-//        RecyclerView recyclerView = getView().findViewById(R.id.recyclerViewPosts);
-//        if (recyclerView != null) {
-//            recyclerView.getLayoutManager();
-//        }
-//    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadPosts();
+    }
 
-    //    @Override
-//    public void onSaveInstanceState(@NonNull Bundle outState) {
-//        RecyclerView recyclerView = getView().findViewById(R.id.recyclerViewPosts);
-//        outState.putParcelable("socialPostsList", recyclerView.getLayoutManager().onSaveInstanceState());
-//        super.onSaveInstanceState(outState);
-//    }
-
-//    @Override
-//    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-//        super.onViewStateRestored(savedInstanceState);
-//        if (savedInstanceState != null) {
-//            stateList = savedInstanceState.getParcelable("socialPostsList");
-//        }
-//    }
-
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//
-//        RecyclerView recyclerView = getView().findViewById(R.id.recyclerViewPosts);
-//
-//        if (stateList != null && recyclerView != null) {
-//            recyclerView.getLayoutManager().onRestoreInstanceState(stateList);
-//        }
-//    }
+    private void loadPosts() {
+        try {
+            List<Workout> workouts = FileManager.loadWorkouts(getContext());
+            PostsRecyclerViewAdapter adapter = new PostsRecyclerViewAdapter(getContext(), workouts);
+            postRecyclerView.setAdapter(adapter);
+        } catch (Exception e) {
+            Toast.makeText(getContext(), "Error loading posts.", Toast.LENGTH_SHORT).show();
+        }
+    }
 }

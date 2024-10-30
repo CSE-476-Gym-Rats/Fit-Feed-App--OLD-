@@ -153,11 +153,11 @@ public class NewWorkoutActivity extends AppCompatActivity {
 
             // Save workout to file
             FileManager.saveWorkout(this, workout);
-            Toast.makeText(this, "Workout saved successfully!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(string.workout_saved_successfully), Toast.LENGTH_SHORT).show();
 
         } catch (Exception e) {
             Log.e("NewWorkoutActivity", e.toString());
-            Toast.makeText(this, "Error saving workout: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(string.error_saving_workout) + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
         finish();
     }
