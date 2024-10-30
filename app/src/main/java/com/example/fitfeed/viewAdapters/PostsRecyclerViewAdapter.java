@@ -38,8 +38,8 @@ public class PostsRecyclerViewAdapter extends RecyclerView.Adapter<PostsRecycler
     public void onBindViewHolder(ViewHolder holder, int position) {
         // Use the workout name as the caption
         Workout workout = workouts.get(position);
-        holder.textView.setText(workout.getWorkoutName()); // Assuming Workout class has getName()
-        holder.imageView.setImageResource(R.drawable.placeholder1);  // Use the placeholder image
+        holder.textView.setText(workout.getWorkoutName());
+        holder.imageView.setImageResource(R.drawable.placeholder1);
     }
 
     @Override
